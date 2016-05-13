@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ChampSoftPractical.Models.SalesPerson>
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+@Html.Grid(Model).Named("grid1").Columns(columns =>
+
+{
+
+    columns.Add().RenderValueAs(model => Html.ActionLink("Select", "Edit", new { id = model.Id })).SetWidth(100).Sanitized(false).Encoded(false);
+    columns.Add(model => model.FirstName).Titled("First Name").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+    columns.Add(model => model.LastName).Titled("Last Name").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+    columns.Add(model => model.SalesPersonCategoryId).Titled("SalesPersonCategoryId").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+    columns.Add(model => model.DateOfBirth).Titled("DateOfBirth").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+    columns.Add(model => model.Salary).Titled("Salary").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+   columns.Add(model => model.IsMarried).Titled("IsMarried").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+    columns.Add(model => model.IsActive).Titled("IsActive").SetWidth(100).Encoded(false).Sanitized(false).Sortable(true);
+
+}).WithPaging(8).Filterable().WithMultipleFilters()
+
+
+
+
+
+
+

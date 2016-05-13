@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SalesPersonDetailsDbModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SalesProducts" Relationship="Self.FK__SalesProd__Produ__173876EA" FromRole="Product" ToRole="SalesProduct" />
+  </EntityType>
+  <EntityType Name="SalesPerson">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="SalesPersonCategoryId" Type="Int32" />
+    <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+    <Property Name="Salary" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsMarried" Type="Boolean" />
+    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="SalesPersonCategory" Relationship="Self.FK__SalesPers__Sales__145C0A3F" FromRole="SalesPerson" ToRole="SalesPersonCategory" />
+    <NavigationProperty Name="SalesProducts" Relationship="Self.FK__SalesProd__Sales__182C9B23" FromRole="SalesPerson" ToRole="SalesProduct" />
+  </EntityType>
+  <EntityType Name="SalesPersonCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SalesPersons" Relationship="Self.FK__SalesPers__Sales__145C0A3F" FromRole="SalesPersonCategory" ToRole="SalesPerson" />
+  </EntityType>
+  <EntityType Name="SalesProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="SalesPersonId" Type="Int32" />
+    <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="UnitsSold" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.FK__SalesProd__Produ__173876EA" FromRole="SalesProduct" ToRole="Product" />
+    <NavigationProperty Name="SalesPerson" Relationship="Self.FK__SalesProd__Sales__182C9B23" FromRole="SalesProduct" ToRole="SalesPerson" />
+  </EntityType>
+  <Association Name="FK__SalesProd__Produ__173876EA">
+    <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+    <End Role="SalesProduct" Type="Self.SalesProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SalesPers__Sales__145C0A3F">
+    <End Role="SalesPersonCategory" Type="Self.SalesPersonCategory" Multiplicity="0..1" />
+    <End Role="SalesPerson" Type="Self.SalesPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesPersonCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesPerson">
+        <PropertyRef Name="SalesPersonCategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SalesProd__Sales__182C9B23">
+    <End Role="SalesPerson" Type="Self.SalesPerson" Multiplicity="0..1" />
+    <End Role="SalesProduct" Type="Self.SalesProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesPerson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SalesProduct">
+        <PropertyRef Name="SalesPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SalesPersonDetailsDbEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="SalesPersons" EntityType="Self.SalesPerson" />
+    <EntitySet Name="SalesPersonCategories" EntityType="Self.SalesPersonCategory" />
+    <EntitySet Name="SalesProducts" EntityType="Self.SalesProduct" />
+    <AssociationSet Name="FK__SalesProd__Produ__173876EA" Association="Self.FK__SalesProd__Produ__173876EA">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="SalesProduct" EntitySet="SalesProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SalesPers__Sales__145C0A3F" Association="Self.FK__SalesPers__Sales__145C0A3F">
+      <End Role="SalesPersonCategory" EntitySet="SalesPersonCategories" />
+      <End Role="SalesPerson" EntitySet="SalesPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SalesProd__Sales__182C9B23" Association="Self.FK__SalesProd__Sales__182C9B23">
+      <End Role="SalesPerson" EntitySet="SalesPersons" />
+      <End Role="SalesProduct" EntitySet="SalesProducts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

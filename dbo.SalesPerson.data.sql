@@ -1,0 +1,1 @@
+﻿insert into SalesPerson values (1,1,'Kamal','Gamage','2015/09/15',50000.00,1,1)
